@@ -1,0 +1,23 @@
+<?php $__env->startSection('content'); ?>
+    <h1>Alumnos</h1>
+    <a class="btn btn-primary" href="<?php echo e(route('alu_create_url')); ?>">Crear Alumno</a>
+    <hr>
+    <ul class="list-unstyled">
+    <?php foreach($alumnos as $var): ?>
+        <li>
+            <p class="lead">
+                <a href="<?php echo e(route('alu_show_url', $var->alu_id)); ?>">
+                    <?php echo e($var-> alu_nombre); ?>
+
+                </a>
+            </p>
+            <br>
+            creado: <?php echo e($var->created_at); ?>
+
+            <hr>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
