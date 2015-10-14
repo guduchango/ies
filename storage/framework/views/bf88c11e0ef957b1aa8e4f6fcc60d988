@@ -1,0 +1,83 @@
+<?php $__env->startSection('title'); ?> Crear Alumno <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="col-md-12">
+        <form method="post" action="<?php echo e(route('alu_put_url',$alumno->alu_id)); ?>" class="form-horizontal"> 
+        <?php echo e(csrf_field()); ?>
+
+        <input type="hidden" name="_method" value="put">
+        <fieldset>
+            <!--Apellido Alumno-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="">Apellido: *</label>
+                <div class="col-sm-10 ">
+                    <input type="text" class="form-control" placeholder="" value="<?php echo e($alumno->alu_apellido); ?>" name="alu_apellido" id="alu_apellido">
+                    <?php if($errors->has('alu_apellido')): ?>
+                        <p class="text-danger"><?php echo e($errors->first('alu_apellido')); ?></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+            
+             <!--Nombre Alumno-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="">Nombre: *</label>
+                <div class="col-sm-10 ">
+                    <input type="text" class="form-control" placeholder="" value="<?php echo e($alumno->alu_nombre); ?>" name="alu_nombre" id="alu_nombre">
+                    <?php if($errors->has('alu_nombre')): ?>
+                        <p class="text-danger"><?php echo e($errors->first('alu_nombre')); ?></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+             
+            <!--Aula Alumno-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="">Aula: *</label>
+                <div class="col-sm-10 ">
+                    <select name="alu_aul_id" class="form-control">
+                        <?php foreach($aulas as $sel): ?>
+                            <?php if($sel->aul_id == $alumno->alu_aul_id): ?>
+                                <option selected value="<?php echo e($sel->aul_id); ?>" ><?php echo e($sel->aul_nombre); ?></option>
+                            <?php else: ?>
+                                <option value="<?php echo e($sel->aul_id); ?>" ><?php echo e($sel->aul_nombre); ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if($errors->has('alu_aul_id')): ?>
+                        <p class="text-danger"><?php echo e($errors->first('alu_aul_id')); ?></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+            
+            <!--Carrera Alumno-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="">Carrera: *</label>
+                <div class="col-sm-10 ">
+                    <select name="alu_car_id" class="form-control">
+                        <?php foreach($carreras as $sel): ?>
+                            <?php if($sel->car_id  == $alumno->alu_car_id): ?>
+                                <option selected value="<?php echo e($sel->car_id); ?>" ><?php echo e($sel->car_nombre); ?></option>
+                            <?php else: ?>
+                                <option value="<?php echo e($sel->car_id); ?>" ><?php echo e($sel->car_nombre); ?></option>
+                            <?php endif; ?> 
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if($errors->has('alu_car_id')): ?>
+                        <p class="text-danger"><?php echo e($errors->first('alu_car_id')); ?></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!--botones-->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <a class="btn btn-danger" href="<?php echo e(route('alu_index_url')); ?>">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        </form>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

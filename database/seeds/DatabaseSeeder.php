@@ -17,18 +17,17 @@ class DatabaseSeeder extends Seeder {
         Aula::truncate();
         Carrera::truncate();
         $faker = Faker\Factory::create();
-        $aulas = ['aula1', 'aula2', 'aula3', 'aula4', 'aula5', 'aula5'];
+        $aulas = ['aula1', 'aula2', 'aula3', 'aula4', 'aula5', 'aula6'];
         foreach ($aulas as $var) {
             $aula = [
                 'aul_nombre' => $var,
             ];
             Aula::create($aula);
         }
-        for ($i = 1; $i < 5; $i++) {
+        for ($i = 1; $i < 100; $i++) {
             $alumno = [
                 'alu_nombre' => $faker->firstName(),
                 'alu_apellido' => $faker->lastName(),
-                'alu_fecha_nacimiento' => $faker->dateTimeBetween($startDate = '-25 years', $endDate = '-18 years'),
                 'alu_car_id' => $faker->randomElement(array(1, 2, 3)),
                 'alu_aul_id' => $faker->randomElement(array(1, 2, 3, 4, 5, 6))
             ];

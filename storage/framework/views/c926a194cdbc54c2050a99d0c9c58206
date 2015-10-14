@@ -1,23 +1,41 @@
+<?php $__env->startSection('title'); ?> Listado de Alumnos <?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
-    <h1>Alumnos</h1>
-    <a class="btn btn-primary" href="<?php echo e(route('alu_create_url')); ?>">Crear Alumno</a>
-    <hr>
-    <ul class="list-unstyled">
-    <?php foreach($alumnos as $var): ?>
-        <li>
-            <p class="lead">
-                <a href="<?php echo e(route('alu_show_url', $var->alu_id)); ?>">
-                    <?php echo e($var-> alu_nombre); ?>
+<div class="pull-left">
+    <a class="btn btn-success" href="<?php echo e(route('alu_create_url')); ?>" >Crear Alumno</a>
+</div>
+    <br><br>
 
-                </a>
-            </p>
-            <br>
-            creado: <?php echo e($var->created_at); ?>
+    <table class="table table-striped">
+        <tr>
+            <th>N°</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Carrera</th>
+            <th>Aula</th>
+            <th>Acciones</th>
+        </tr>
+        <?php foreach($alumnos as $var): ?>
+            <tr>
+                <td><?php echo e($var->alu_id); ?></td>
+                <td><?php echo e(strtoupper($var->alu_nombre)); ?></td>
+                <td><?php echo e(strtoupper($var->alu_apellido)); ?></td>
+                <td><?php echo e(strtoupper($var->carrera->car_nombre)); ?></td>
+                <td><?php echo e(strtoupper($var->aula->aul_nombre)); ?></td>
+                <td>
+                    <form action="<?php echo e(route('alu_destroy_url', $var->alu_id)); ?>" method="post" title="Eliminar doctor" >
+                        <?php echo e(csrf_field()); ?>
 
-            <hr>
-        </li>
-    <?php endforeach; ?>
-    </ul>
+                        <button  class="glyphicon glyphicon-trash btn btn-danger pull-right"></button>
+                        <input type="hidden" name="_method" value="delete">
+                    </form>
+                    <a class='btn  btn-info glyphicon glyphicon-edit' title='editar alumno'  href="<?php echo e(route('alu_edit_url', $var->alu_id)); ?>"></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br><br>
+    <div class="pagination"> <?php echo $alumnos->render(); ?></div>
+    <br><br>
 <?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
