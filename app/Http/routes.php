@@ -10,7 +10,7 @@
 |
 */
 Route::get('/', function () {
-    
+    return View('home.home');
 });
 
 Route::get('/alumnos', [
@@ -47,3 +47,9 @@ Route::delete('alumnos/{id}/destroy', [
         'uses' => 'AlumnosController@destroy',
         'as'   => 'alu_destroy_url',
 ])->where('id', '[0-9]+');
+
+
+Route::get('/alumnos_repo', [
+        'uses' => 'AlumnosRepoController@index',
+        'as'   => 'alu_repo_index_url',
+]);
