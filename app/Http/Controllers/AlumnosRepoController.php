@@ -1,7 +1,7 @@
 <?php
 
 namespace ies\Http\Controllers;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use \ies\Http\Controllers\Controller;
 use \ies\Repositories\AluRepositoryInterface;
@@ -13,8 +13,8 @@ class AlumnosRepoController extends Controller {
     }
 
     public function index() {
-        $alumnos = $this->alumno->selectAll();
-        dd($alumnos);
+        $alumnos = $this->alumno->aluSelectAll();
+        return view('alumnos.alu_index',['alumnos'=>$alumnos]);
     }
 
     /**
@@ -23,7 +23,15 @@ class AlumnosRepoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        $aulas = $this->alumno->aulSelectAll();
+        $carreras = $this->alumno->carSelectAll();
+        
+        $data=[
+            'carreras' => $carreras,
+            'aulas' => $aulas
+        ];
+        
+        return view('alumnos.alu_create',$data);
     }
 
     /**
@@ -33,7 +41,22 @@ class AlumnosRepoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        
+        $validator = Validator::make($request->all(), [
+            'alu_nombre' => 'required',
+            'alu_apellido' =>  'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('alu_create_url')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        
+        $this->alumno->aluSave($request);
+
+        return redirect()->route('alu_index_url');
     }
 
     /**
@@ -53,7 +76,16 @@ class AlumnosRepoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        $alumno = $this->alumno->aluFind($id);
+        $aulas = $this->alumno->aulSelectAll();
+        $carreras = $this->alumno->carSelectAll();
+        
+        $data=[
+            'carreras' => $carreras,
+            'aulas' => $aulas,
+            'alumno' => $alumno
+        ];
+        return view('alumnos.alu_edit',$data);
     }
 
     /**
@@ -64,7 +96,10 @@ class AlumnosRepoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        
+        $this->alumno->aluUpdate($request,$id);
+        
+        return redirect()->route('alu_index_url');
     }
 
     /**
@@ -74,7 +109,10 @@ class AlumnosRepoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        
+        $this->alumno->aluDestroy($id);
+        
+        return redirect()->route('alu_index_url');
     }
 
 }

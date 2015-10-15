@@ -9,47 +9,45 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+$controller = 'AlumnosRepoController';
+
+
 Route::get('/', function () {
     return View('home.home');
 });
 
 Route::get('/alumnos', [
-        'uses' => 'AlumnosController@index',
+        'uses' => $controller.'@index',
         'as'   => 'alu_index_url',
 ]);
 
 Route::get('/alumnos/create', [
-        'uses' => 'AlumnosController@create',
+        'uses' => $controller.'@create',
         'as'   => 'alu_create_url',
 ]);
 
 Route::post('/alumnos/store', [
-        'uses' => 'AlumnosController@store',
+        'uses' => $controller.'@store',
         'as'   => 'alu_store_url',
 ]);
 
 Route::get('alumnos/{id}/edit', [
-        'uses' => 'AlumnosController@edit',
+        'uses' => $controller.'@edit',
         'as'   => 'alu_edit_url',
 ])->where('id', '[0-9]+');
 
 Route::put('alumnos/{id}/update', [
-        'uses' => 'AlumnosController@update',
+        'uses' => $controller.'@update',
         'as'   => 'alu_put_url',
 ])->where('id', '[0-9]+');
 
 Route::get('alumnos/{id}/show', [
-        'uses' => 'AlumnosController@show',
+        'uses' => $controller.'@show',
         'as'   => 'alu_show_url',
 ])->where('id', '[0-9]+');
  
 Route::delete('alumnos/{id}/destroy', [
-        'uses' => 'AlumnosController@destroy',
+        'uses' => $controller.'@destroy',
         'as'   => 'alu_destroy_url',
 ])->where('id', '[0-9]+');
 
-
-Route::get('/alumnos_repo', [
-        'uses' => 'AlumnosRepoController@index',
-        'as'   => 'alu_repo_index_url',
-]);
